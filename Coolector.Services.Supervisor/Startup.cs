@@ -23,7 +23,7 @@ namespace Coolector.Services.Supervisor
 
             if (env.IsProduction())
             {
-                // builder.AddLockbox();
+                builder.AddLockbox();
             }
 
             Configuration = builder.Build();

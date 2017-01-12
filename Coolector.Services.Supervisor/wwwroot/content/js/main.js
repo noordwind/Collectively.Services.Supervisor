@@ -1,14 +1,13 @@
-(function($){
-  $(function(){
+var main = main || {};
 
-    init();
-
-    function init() {
-      var viewModel = new DashboardViewModel();
+(function () {
+    main.init = function(supervisorUrl) {
+      var viewModel = new DashboardViewModel(supervisorUrl);
       ko.applyBindings(viewModel);
     }
 
-    function DashboardViewModel() {
+    function DashboardViewModel(supervisorUrl) {
+      console.log(supervisorUrl);
       var self = this;
       self.result = ko.observable({});
       updateResult();
@@ -19,7 +18,7 @@
       }
 
       function getSupervisorResult() {
-        $.get("http://localhost:11000/supervisor", function(result) {
+        $.get(supervisorUrl, function(result) {
           self.result(new ResultViewModel(result));
         });
       }
@@ -53,5 +52,4 @@
       this.browsableUrl = ko.observable(instance.browsableUrl);
       this.alive = ko.observable(instance.alive);
     }
-  }); 
-})(jQuery); 
+})();

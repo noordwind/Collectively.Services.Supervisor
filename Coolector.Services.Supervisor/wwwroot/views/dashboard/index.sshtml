@@ -19,7 +19,7 @@
   <div class="container">
     <div class="section">
       <ul class="collection with-header" data-bind="foreach: result().services">
-        <li class="collection-header"><h5 data-bind="text: name"></h5>Checked at: <span data-bind="text: checkedAt"></span></li>
+        <li class="collection-header"><h5 data-bind="text: name"></h5>@Model.Url Checked at: <span data-bind="text: checkedAt"></span></li>
         <li class="collection-item" data-bind="foreach: instances, css: { 'light-green lighten-1': alive(), 'red lighten-2': !alive() }">
             <div>
                 <span data-bind="text: name"></span> [<a href="" data-bind="attr: { href: browsableUrl }, text: url" target="_blank"></a>]
@@ -32,5 +32,10 @@
   <script src="static/js/knockout-3.4.1.min.js"></script>
   <script src="static/js/materialize.min.js"></script>
   <script src="static/js/main.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      main.init('@Model.Url');
+    });
+  </script>
   </body>
 </html>

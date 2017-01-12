@@ -7,7 +7,6 @@ var main = main || {};
     }
 
     function DashboardViewModel(supervisorUrl) {
-      console.log(supervisorUrl);
       var self = this;
       self.result = ko.observable({});
       updateResult();

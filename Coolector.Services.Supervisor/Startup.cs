@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Nancy.Owin;
 using NLog.Extensions.Logging;
 using Coolector.Services.Supervisor.Framework;
+using NLog.Web;
 
 namespace Coolector.Services.Supervisor
 {
@@ -32,6 +33,7 @@ namespace Coolector.Services.Supervisor
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddNLog();
+            app.AddNLogWeb();
             env.ConfigureNLog("nlog.config");
             app.UseOwin().UseNancy(x => x.Bootstrapper = new Bootstrapper(Configuration));
         }

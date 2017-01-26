@@ -22,7 +22,7 @@ namespace Coolector.Services.Supervisor
                 .AddEnvironmentVariables()
                 .SetBasePath(env.ContentRootPath);
 
-            if (env.IsProduction())
+            if (env.IsProduction() || env.IsDevelopment())
             {
                 builder.AddLockbox();
             }

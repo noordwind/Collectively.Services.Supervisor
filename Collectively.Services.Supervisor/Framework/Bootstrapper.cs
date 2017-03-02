@@ -1,6 +1,10 @@
 using Autofac;
 using Microsoft.Extensions.Configuration;
+using Nancy;
 using Nancy.Bootstrapper;
+using Nancy.Bootstrappers.Autofac;
+using Nancy.Conventions;
+using Nancy.Serialization.JsonNet;
 using NLog;
 using RawRabbit.Configuration;
 using Collectively.Messages.Commands;
@@ -8,14 +12,12 @@ using Collectively.Messages.Events;
 using Collectively.Common.Extensions;
 using Collectively.Common.Mongo;
 using Collectively.Common.Nancy;
-using Collectively.Common.Nancy.Serialization;
 using System.Reflection;
 using Collectively.Common.Exceptionless;
 using Collectively.Common.RabbitMq;
 using Collectively.Common.Security;
 using Collectively.Common.Services;
-using Nancy;
-using Nancy.Conventions;
+
 using Newtonsoft.Json;
 using Collectively.Services.Supervisor.Settings;
 using Collectively.Services.Supervisor.Services;

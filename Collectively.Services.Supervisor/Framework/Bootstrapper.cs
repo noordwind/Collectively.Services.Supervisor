@@ -4,7 +4,6 @@ using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
 using Nancy.Conventions;
-using Nancy.Serialization.JsonNet;
 using NLog;
 using RawRabbit.Configuration;
 using Collectively.Messages.Commands;
@@ -17,7 +16,6 @@ using Collectively.Common.Exceptionless;
 using Collectively.Common.RabbitMq;
 using Collectively.Common.Security;
 using Collectively.Common.Services;
-
 using Newtonsoft.Json;
 using Collectively.Services.Supervisor.Settings;
 using Collectively.Services.Supervisor.Services;
@@ -43,7 +41,7 @@ namespace Collectively.Services.Supervisor.Framework
             {
                 builder.RegisterInstance(_configuration.GetSettings<MongoDbSettings>()).SingleInstance();
                 builder.RegisterInstance(_configuration.GetSettings<SupervisorSettings>()).SingleInstance();
-                builder.RegisterType<JsonNetSerializer>().As<JsonSerializer>().SingleInstance();
+                builder.RegisterType<CustomJsonSerializer>().As<JsonSerializer>().SingleInstance();
                 builder.RegisterModule<MongoDbModule>();
                 builder.RegisterType<MongoDbInitializer>().As<IDatabaseInitializer>();
                 builder.RegisterType<Handler>().As<IHandler>();

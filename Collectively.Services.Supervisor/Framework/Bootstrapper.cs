@@ -43,7 +43,7 @@ namespace Collectively.Services.Supervisor.Framework
             {
                 builder.RegisterInstance(_configuration.GetSettings<MongoDbSettings>()).SingleInstance();
                 builder.RegisterInstance(_configuration.GetSettings<SupervisorSettings>()).SingleInstance();
-                builder.RegisterType<CustomJsonSerializer>().As<JsonSerializer>().SingleInstance();
+                builder.RegisterType<JsonNetSerializer>().As<JsonSerializer>().SingleInstance();
                 builder.RegisterModule<MongoDbModule>();
                 builder.RegisterType<MongoDbInitializer>().As<IDatabaseInitializer>();
                 builder.RegisterType<Handler>().As<IHandler>();

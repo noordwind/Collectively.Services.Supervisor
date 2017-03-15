@@ -23,10 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../Collectively.Common/Collectively.Common/Collectively.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Collectively.Common" Version="1.0.*" />
     <PackageReference Include="Autofac" Version="4.2.1" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.0.0" />
     <PackageReference Include="Lockbox.Client" Version="1.0.0" />

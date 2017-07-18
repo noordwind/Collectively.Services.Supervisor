@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Collectively.Services.Supervisor": {
+      "commandName": "Project",
+      "applicationUrl": "http://localhost:11001"
+    }
+  }
+}

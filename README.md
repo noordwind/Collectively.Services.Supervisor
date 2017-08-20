@@ -43,13 +43,13 @@ In order to run the **Collectively.Services.Supervisor** you need to have instal
 - [MongoDB](https://www.mongodb.com)
 - [RabbitMQ](https://www.rabbitmq.com)
 
-Clone the repository and start the application via *dotnet run* command:
+Clone the repository and start the application via *dotnet run --no-restore* command:
 
 ```
 git clone https://github.com/noordwind/Collectively.Services.Supervisor
 cd Collectively.Services.Supervisor/Collectively.Services.Supervisor
 dotnet restore --source https://api.nuget.org/v3/index.json --source https://www.myget.org/F/collectively/api/v3/index.json --no-cache
-dotnet run --urls "http://*:11001"
+dotnet run --no-restore --urls "http://*:11001"
 ```
 
 Once executed, you shall be able to access the service at [http://localhost:11001](http://localhost:11001)
@@ -71,5 +71,5 @@ For the local testing purposes the *.local* or *.docker* configuration files are
 
 **Solution structure**
 ----------------
-- **Collectively.Services.Supervisor** - core and executable project via *dotnet run* command.
-- **Collectively.Services.Supervisor.Tests** - unit & integration tests executable via *dotnet test* command.
+- **Collectively.Services.Supervisor** - core and executable project via *dotnet run --no-restore* command.
+- **Collectively.Services.Supervisor.Tests** - unit & integration tests executable via *dotnet test --no-restore* command.

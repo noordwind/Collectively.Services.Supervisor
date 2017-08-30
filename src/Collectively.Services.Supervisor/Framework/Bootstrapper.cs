@@ -4,7 +4,7 @@ using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
 using Nancy.Conventions;
-using NLog;
+using Serilog;
 using RawRabbit.Configuration;
 using Collectively.Messages.Commands;
 using Collectively.Messages.Events;
@@ -19,19 +19,23 @@ using Collectively.Common.Services;
 using Newtonsoft.Json;
 using Collectively.Services.Supervisor.Settings;
 using Collectively.Services.Supervisor.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Autofac.Extensions.DependencyInjection;
 
 namespace Collectively.Services.Supervisor.Framework
 {
     public class Bootstrapper : AutofacNancyBootstrapper
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger Logger = Log.Logger;
         private static IExceptionHandler _exceptionHandler;
         private readonly IConfiguration _configuration;
+        private IServiceCollection _services;
         public static ILifetimeScope LifetimeScope { get; private set; }
 
-        public Bootstrapper(IConfiguration configuration)
+        public Bootstrapper(IConfiguration configuration, IServiceCollection services)
         {
             _configuration = configuration;
+            _services = services;
         }
 
         protected override void ConfigureApplicationContainer(ILifetimeScope container)
@@ -39,6 +43,7 @@ namespace Collectively.Services.Supervisor.Framework
             base.ConfigureApplicationContainer(container);
             container.Update(builder =>
             {
+                builder.Populate(_services);
                 builder.RegisterInstance(_configuration.GetSettings<MongoDbSettings>()).SingleInstance();
                 builder.RegisterInstance(_configuration.GetSettings<SupervisorSettings>()).SingleInstance();
                 builder.RegisterType<CustomJsonSerializer>().As<JsonSerializer>().SingleInstance();
@@ -88,7 +93,7 @@ namespace Collectively.Services.Supervisor.Framework
             };
             pipelines.SetupTokenAuthentication(container);
             _exceptionHandler = container.Resolve<IExceptionHandler>();
-            Logger.Info("Collectively.Services.Supervisor API has started.");
+            Logger.Information("Collectively.Services.Supervisor API has started.");
         }
     }
 }

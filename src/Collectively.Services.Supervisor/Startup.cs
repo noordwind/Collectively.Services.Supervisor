@@ -4,15 +4,16 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Nancy.Owin;
-using NLog.Extensions.Logging;
 using Collectively.Services.Supervisor.Framework;
-using NLog.Web;
+using Collectively.Common.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Collectively.Services.Supervisor
 {
     public class Startup
     {
         public IConfiguration Configuration { get; set; }
+        public IServiceCollection Services { get; set; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -30,12 +31,22 @@ namespace Collectively.Services.Supervisor
             Configuration = builder.Build();
         }
 
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddSerilog(Configuration);
+            services.AddWebEncoders();
+            services.AddCors();
+            Services = services;
+        }
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddNLog();
-            app.AddNLogWeb();
-            env.ConfigureNLog("nlog.config");
-            app.UseOwin().UseNancy(x => x.Bootstrapper = new Bootstrapper(Configuration));
+            app.UseSerilog(loggerFactory);
+            app.UseCors(builder => builder.AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowAnyOrigin()
+               .AllowCredentials());
+            app.UseOwin().UseNancy(x => x.Bootstrapper = new Bootstrapper(Configuration, Services));
         }
     }
 }

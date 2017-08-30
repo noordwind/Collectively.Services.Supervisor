@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using NLog;
+using Serilog;
 using Collectively.Services.Supervisor.Domain;
 using Collectively.Services.Supervisor.Settings;
 
@@ -10,7 +10,7 @@ namespace Collectively.Services.Supervisor.Services
 {
     public class SupervisorService : ISupervisorService
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger Logger = Log.Logger;
         private readonly HttpClient _httpClient = new HttpClient();
         private readonly SupervisorSettings _supervisorSettings;
 

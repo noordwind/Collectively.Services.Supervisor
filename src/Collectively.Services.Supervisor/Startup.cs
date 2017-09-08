@@ -33,7 +33,7 @@ namespace Collectively.Services.Supervisor
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSerilog(Configuration);
+            //services.AddSerilog(Configuration);
             services.AddWebEncoders();
             services.AddCors();
             Services = services;
@@ -41,7 +41,7 @@ namespace Collectively.Services.Supervisor
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseSerilog(loggerFactory);
+            //app.UseSerilog(loggerFactory);
             app.UseCors(builder => builder.AllowAnyHeader()
                .AllowAnyMethod()
                .AllowAnyOrigin()

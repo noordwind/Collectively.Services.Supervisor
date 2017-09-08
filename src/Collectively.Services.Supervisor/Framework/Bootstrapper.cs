@@ -26,7 +26,7 @@ namespace Collectively.Services.Supervisor.Framework
 {
     public class Bootstrapper : AutofacNancyBootstrapper
     {
-        private static readonly ILogger Logger = Log.Logger;
+        //private static readonly ILogger Logger = Log.Logger;
         private static IExceptionHandler _exceptionHandler;
         private readonly IConfiguration _configuration;
         private IServiceCollection _services;
@@ -48,13 +48,13 @@ namespace Collectively.Services.Supervisor.Framework
                 builder.RegisterType<SupervisorService>().As<ISupervisorService>().InstancePerLifetimeScope();
                 builder.RegisterInstance(_configuration.GetSettings<ExceptionlessSettings>()).SingleInstance();
                 builder.RegisterType<ExceptionlessExceptionHandler>().As<IExceptionHandler>().SingleInstance();
-                SecurityContainer.Register(builder, _configuration);
+                //SecurityContainer.Register(builder, _configuration);
             });
         }
 
         protected override void RequestStartup(ILifetimeScope container, IPipelines pipelines, NancyContext context)
         {
-            pipelines.SetupTokenAuthentication(container.Resolve<IJwtTokenHandler>());
+            //pipelines.SetupTokenAuthentication(container.Resolve<IJwtTokenHandler>());
             pipelines.OnError.AddItemToEndOfPipeline((ctx, ex) =>
             {
                 _exceptionHandler.Handle(ex, ctx.ToExceptionData(),
@@ -78,7 +78,7 @@ namespace Collectively.Services.Supervisor.Framework
                 ctx.Response.Headers.Add("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
             };
             _exceptionHandler = container.Resolve<IExceptionHandler>();
-            Logger.Information("Collectively.Services.Supervisor API has started.");
+            //Logger.Information("Collectively.Services.Supervisor API has started.");
         }
     }
 }

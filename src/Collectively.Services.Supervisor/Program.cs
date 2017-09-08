@@ -9,7 +9,6 @@ namespace Collectively.Services.Supervisor
         {
             WebServiceHost
                 .Create<Startup>(args: args)
-                .UseAutofac(Bootstrapper.LifetimeScope)
                 .Build()
                 .Run();
         }

@@ -45,7 +45,7 @@ namespace Collectively.Services.Supervisor.Framework
                 builder.Populate(_services);
                 builder.RegisterInstance(_configuration.GetSettings<SupervisorSettings>()).SingleInstance();
                 builder.RegisterType<CustomJsonSerializer>().As<JsonSerializer>().SingleInstance();
-                builder.RegisterType<SupervisorService>().As<ISupervisorService>().SingleInstance();
+                builder.RegisterType<SupervisorService>().As<ISupervisorService>().InstancePerLifetimeScope();
                 builder.RegisterInstance(_configuration.GetSettings<ExceptionlessSettings>()).SingleInstance();
                 builder.RegisterType<ExceptionlessExceptionHandler>().As<IExceptionHandler>().SingleInstance();
                 SecurityContainer.Register(builder, _configuration);

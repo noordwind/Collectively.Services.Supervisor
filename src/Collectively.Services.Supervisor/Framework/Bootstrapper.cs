@@ -48,7 +48,9 @@ namespace Collectively.Services.Supervisor.Framework
                 builder.RegisterType<SupervisorService>().As<ISupervisorService>().SingleInstance();
                 builder.RegisterInstance(_configuration.GetSettings<ExceptionlessSettings>()).SingleInstance();
                 builder.RegisterType<ExceptionlessExceptionHandler>().As<IExceptionHandler>().SingleInstance();
-                SecurityContainer.Register(builder, _configuration);
+                builder.RegisterInstance(_configuration.GetSettings<JwtTokenSettings>()).SingleInstance();
+                builder.RegisterType<JwtTokenHandler>().As<IJwtTokenHandler>().SingleInstance();               
+                //SecurityContainer.Register(builder, _configuration);
             });
         }
 

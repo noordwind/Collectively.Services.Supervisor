@@ -26,10 +26,8 @@ namespace Collectively.Services.Supervisor.Framework
 {
     public class Bootstrapper : AutofacNancyBootstrapper
     {
-        //private static readonly ILogger Logger = Log.Logger;
         private readonly IConfiguration _configuration;
         private IServiceCollection _services;
-        public static ILifetimeScope LifetimeScope { get; private set; }
 
         public Bootstrapper(IConfiguration configuration, IServiceCollection services)
         {
@@ -46,10 +44,8 @@ namespace Collectively.Services.Supervisor.Framework
                 builder.RegisterInstance(_configuration.GetSettings<SupervisorSettings>()).SingleInstance();
                 builder.RegisterType<CustomJsonSerializer>().As<JsonSerializer>().SingleInstance();
                 builder.RegisterType<SupervisorService>().As<ISupervisorService>().SingleInstance();
-                //SecurityContainer.Register(builder, _configuration);
-                //RabbitMqContainer.Register(builder, _configuration.GetSettings<RawRabbitConfiguration>());
+                SecurityContainer.Register(builder, _configuration);
             });
-            LifetimeScope = container;
         }
 
         protected override void ConfigureConventions(NancyConventions nancyConventions)
@@ -65,8 +61,7 @@ namespace Collectively.Services.Supervisor.Framework
                 ctx.Response.Headers.Add("Access-Control-Allow-Origin", "*");
                 ctx.Response.Headers.Add("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
             };
-            //pipelines.SetupTokenAuthentication(container);
-            //Logger.Information("Collectively.Services.Supervisor API has started.");
+            pipelines.SetupTokenAuthentication(container);
         }
     }
 }

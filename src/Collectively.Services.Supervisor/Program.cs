@@ -10,7 +10,6 @@ namespace Collectively.Services.Supervisor
             WebServiceHost
                 .Create<Startup>(args: args)
                 .UseAutofac(Bootstrapper.LifetimeScope)
-                .UseRabbitMq(queueName: typeof(Program).Namespace)
                 .Build()
                 .Run();
         }

@@ -26,7 +26,7 @@ namespace Collectively.Services.Supervisor.Framework
 {
     public class Bootstrapper : AutofacNancyBootstrapper
     {
-        private static readonly ILogger Logger = Log.Logger;
+        //private static readonly ILogger Logger = Log.Logger;
         private readonly IConfiguration _configuration;
         private IServiceCollection _services;
         public static ILifetimeScope LifetimeScope { get; private set; }
@@ -66,7 +66,7 @@ namespace Collectively.Services.Supervisor.Framework
                 ctx.Response.Headers.Add("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
             };
             //pipelines.SetupTokenAuthentication(container);
-            Logger.Information("Collectively.Services.Supervisor API has started.");
+            //Logger.Information("Collectively.Services.Supervisor API has started.");
         }
     }
 }

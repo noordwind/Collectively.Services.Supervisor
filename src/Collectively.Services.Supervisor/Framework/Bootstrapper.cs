@@ -44,7 +44,7 @@ namespace Collectively.Services.Supervisor.Framework
                 builder.RegisterInstance(_configuration.GetSettings<SupervisorSettings>()).SingleInstance();
                 builder.RegisterType<CustomJsonSerializer>().As<JsonSerializer>().SingleInstance();
                 builder.RegisterType<SupervisorService>().As<ISupervisorService>().SingleInstance();
-                SecurityContainer.Register(builder, _configuration);
+                //SecurityContainer.Register(builder, _configuration);
             });
         }
 
@@ -61,7 +61,7 @@ namespace Collectively.Services.Supervisor.Framework
                 ctx.Response.Headers.Add("Access-Control-Allow-Origin", "*");
                 ctx.Response.Headers.Add("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
             };
-            pipelines.SetupTokenAuthentication(container);
+            //pipelines.SetupTokenAuthentication(container);
         }
     }
 }

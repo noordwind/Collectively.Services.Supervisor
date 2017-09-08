@@ -48,15 +48,15 @@ namespace Collectively.Services.Supervisor.Framework
                 builder.RegisterType<SupervisorService>().As<ISupervisorService>().SingleInstance();
                 builder.RegisterInstance(_configuration.GetSettings<ExceptionlessSettings>()).SingleInstance();
                 builder.RegisterType<ExceptionlessExceptionHandler>().As<IExceptionHandler>().SingleInstance();
-                builder.RegisterInstance(_configuration.GetSettings<JwtTokenSettings>()).SingleInstance();
-                builder.RegisterType<JwtTokenHandler>().As<IJwtTokenHandler>().SingleInstance();               
+                //builder.RegisterInstance(_configuration.GetSettings<JwtTokenSettings>()).SingleInstance();
+                //builder.RegisterType<JwtTokenHandler>().As<IJwtTokenHandler>().InstancePerLifetimeScope();               
                 //SecurityContainer.Register(builder, _configuration);
             });
         }
 
         protected override void RequestStartup(ILifetimeScope container, IPipelines pipelines, NancyContext context)
         {
-            pipelines.SetupTokenAuthentication(container.Resolve<IJwtTokenHandler>());
+            //pipelines.SetupTokenAuthentication(container.Resolve<IJwtTokenHandler>());
             pipelines.OnError.AddItemToEndOfPipeline((ctx, ex) =>
             {
                 _exceptionHandler.Handle(ex, ctx.ToExceptionData(),

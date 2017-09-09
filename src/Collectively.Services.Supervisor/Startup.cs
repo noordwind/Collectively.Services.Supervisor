@@ -23,18 +23,18 @@ namespace Collectively.Services.Supervisor
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddSerilog(Configuration);
-            // services.AddWebEncoders();
-            // services.AddCors();
+            services.AddWebEncoders();
+            services.AddCors();
             Services = services;
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             //app.UseSerilog(loggerFactory);
-            // app.UseCors(builder => builder.AllowAnyHeader()
-            //    .AllowAnyMethod()
-            //    .AllowAnyOrigin()
-            //    .AllowCredentials());
+            app.UseCors(builder => builder.AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowAnyOrigin()
+               .AllowCredentials());
             app.UseOwin().UseNancy(x => x.Bootstrapper = new Bootstrapper(Configuration, Services));
         }
     }

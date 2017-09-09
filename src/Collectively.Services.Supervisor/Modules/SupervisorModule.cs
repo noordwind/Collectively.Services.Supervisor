@@ -8,8 +8,10 @@ namespace Collectively.Services.Supervisor.Modules
     {
         public SupervisorModule(ISupervisorService supervisorService) : base(requireAuthentication: false)
         {
-            Get("supervisor", args => Fetch<GetSupervisorResult, SupervisorResult>
-                (async x => await supervisorService.CheckServicesAsync()).HandleAsync());
+            // Get("supervisor", args => Fetch<GetSupervisorResult, SupervisorResult>
+            //     (async x => await supervisorService.CheckServicesAsync()).HandleAsync());
+
+            Get("supervisor", args => new {});          
         }
     }
 }

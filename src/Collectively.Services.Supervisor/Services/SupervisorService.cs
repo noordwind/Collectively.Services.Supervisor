@@ -10,7 +10,7 @@ namespace Collectively.Services.Supervisor.Services
 {
     public class SupervisorService : ISupervisorService
     {
-        //private static readonly ILogger Logger = Log.Logger;
+        private static readonly ILogger Logger = Log.Logger;
         private readonly HttpClient _httpClient = new HttpClient();
         private readonly SupervisorSettings _supervisorSettings;
 
@@ -71,7 +71,7 @@ namespace Collectively.Services.Supervisor.Services
             }
             catch(Exception exception)
             {
-                //Logger.Error(exception, exception.ToString());
+                Logger.Error(exception, exception.ToString());
             }
 
             return result;

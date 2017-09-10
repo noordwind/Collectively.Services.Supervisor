@@ -10,7 +10,7 @@ using Collectively.Messages.Commands;
 using Collectively.Messages.Events;
 using Collectively.Common.Extensions;
 using Collectively.Common.Mongo;
-using Collectively.Common.Nancy;
+using Collectively.Common.NancyFx;
 using System.Reflection;
 using Collectively.Common.Exceptionless;
 using Collectively.Common.RabbitMq;

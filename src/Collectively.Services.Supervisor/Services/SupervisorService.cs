@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Serilog;
 using Collectively.Services.Supervisor.Domain;
 using Collectively.Services.Supervisor.Settings;
+using Microsoft.Extensions.Options;
+using System.Linq;
 
 namespace Collectively.Services.Supervisor.Services
 {
@@ -20,40 +22,22 @@ namespace Collectively.Services.Supervisor.Services
         }
 
         public async Task<SupervisorResult> CheckServicesAsync()
+        => new SupervisorResult
         {
-            var result = new SupervisorResult
-            {
-                Services = new List<SupervisorResult.Service>()
-            };
-
-            foreach(var service in _supervisorSettings.Services)
-            {
-                var serviceResult = await CheckServiceAsync(service);
-                result.Services.Add(serviceResult);
-            }
-
-            return result;
-        }
+            Services = await Task.WhenAll(_supervisorSettings.Services
+                .Select(x => CheckServiceAsync(x)))
+        };
 
         private async Task<SupervisorResult.Service> CheckServiceAsync(SupervisorSettings.Service service)
+        => new SupervisorResult.Service
         {
-            var result = new SupervisorResult.Service
-            {
-                Name = service.Name,
-                Type = service.Type,
-                Description = service.Description,
-                Instances = new List<SupervisorResult.ServiceInstance>(),
-                CheckedAt = DateTime.UtcNow
-            };
-
-            foreach(var instance in service.Instances)
-            {
-                var instanceResult = await CheckServiceInstanceAsync(instance);
-                result.Instances.Add(instanceResult);
-            }
-
-            return result;           
-        }
+            Name = service.Name,
+            Type = service.Type,
+            Description = service.Description,
+            CheckedAt = DateTime.UtcNow,
+            Instances = await Task.WhenAll(service.Instances
+                .Select(x => CheckServiceInstanceAsync(x)))
+        };        
 
         private async Task<SupervisorResult.ServiceInstance> CheckServiceInstanceAsync(SupervisorSettings.ServiceInstance instance)
         {
